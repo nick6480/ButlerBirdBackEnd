@@ -117,7 +117,7 @@ router.post('/updatecatpos', function(req, res, next) {
 
 router.post('/update/content', async function(req, res, next) {
 
-    console.log("BING BONG");
+
 
     let form = new formidable.IncomingForm();
 
@@ -182,14 +182,34 @@ router.post('/', function(req, res, next) {
 
 
 router.get('/get', function(req, res, next) {
+
+  console.log("GET REQ");
+
   console.log(req.hostname);
 
+  console.log(req.query);
 
+  const page = req.query.page;
+  const limit = req.query.limit;
 
   Hotel.findOne({'butlerbird.url' : req.hostname}, function (err, hotel) {
     if(err) console.log(err);
     if(hotel) {
       console.log(hotel);
+
+
+
+      for (var i = 0; i < hotel.butlerbird.content.categorys.length; i++) {
+        for (var o = 0; o < hotel.butlerbird.content.categorys[i].category.content.length; o++) {
+          delete hotel.butlerbird.content.categorys[i].category.content[o].preview.img
+          delete hotel.butlerbird.content.categorys[i].category.content[o].page.img
+        }
+      }
+
+      const startIndex = (page - 1) * limit;
+      const endIndex = page * limit;
+
+      const resultHotel = hotel.butlerbird.content.categorys.slice(startIndex, endIndex)
 
       res.json(hotel);
     }
