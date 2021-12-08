@@ -211,8 +211,10 @@ router.get('/get', function(req, res, next) {
 
       const resultHotel = hotel.butlerbird.content.categorys.slice(startIndex, endIndex)
 
-      //res.json(hotel);
-      res.send("asd")
+
+
+      res.json(resultHotel);
+
     }
   })
 
