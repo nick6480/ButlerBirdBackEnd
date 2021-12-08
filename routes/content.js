@@ -219,7 +219,7 @@ router.get('/get', function(req, res, next) {
 
       console.log("result HOTEL:" + resultHotel);
 
-      res.json({data: resultHotel});
+      res.json(resultHotel);
 
     }
   })
