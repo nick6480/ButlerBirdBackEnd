@@ -191,8 +191,10 @@ router.get('/get', function(req, res, next) {
 
   const page = req.query.page;
   const limit = req.query.limit;
+  const id = req.query.id;
 
-  Hotel.findOne({'butlerbird.url' : req.hostname}, function (err, hotel) {
+  Hotel.findOne({_id : id}, function (err, hotel) {
+  //Hotel.findOne({'butlerbird.url' : req.hostname}, function (err, hotel) {
     if(err) console.log(err);
     if(hotel) {
       console.log(hotel);
