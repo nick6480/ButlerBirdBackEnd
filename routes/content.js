@@ -185,7 +185,7 @@ router.get('/get', function(req, res, next) {
 
   console.log("GET REQ");
 
-  console.log(req.hostname);
+  console.log("BADA BING: " + req.hostname);
 
   console.log(req.query);
 
@@ -211,7 +211,7 @@ router.get('/get', function(req, res, next) {
 
       const resultHotel = hotel.butlerbird.content.categorys.slice(startIndex, endIndex)
 
-
+      console.log();
 
       res.json(resultHotel);
 
