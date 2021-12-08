@@ -213,11 +213,11 @@ router.get('/get', function(req, res, next) {
       const startIndex = (page - 1) * limit;
       const endIndex = page * limit;
 
-      const resultHotel = hotel.butlerbird.content.categorys.slice(startIndex, endIndex)
+      //const resultHotel = hotel.butlerbird.content.categorys.slice(startIndex, endIndex)
 
       console.log("result HOTEL:" + resultHotel);
 
-      res.json({data: resultHotel});
+      res.json({data: hotel});
 
     }
   })
