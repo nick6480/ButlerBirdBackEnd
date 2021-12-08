@@ -193,6 +193,8 @@ router.get('/get', function(req, res, next) {
   const limit = req.query.limit;
   const id = req.query.id;
 
+  console.log(id);
+
   Hotel.findOne({_id : id}, function (err, hotel) {
   //Hotel.findOne({'butlerbird.url' : req.hostname}, function (err, hotel) {
     if(err) console.log(err);
@@ -213,7 +215,7 @@ router.get('/get', function(req, res, next) {
 
       const resultHotel = hotel.butlerbird.content.categorys.slice(startIndex, endIndex)
 
-      console.log();
+      console.log(resultHotel);
 
       res.json(resultHotel);
 
