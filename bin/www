@@ -19,6 +19,12 @@ app.set('port', port);
  * Create HTTP server.
  */
 
+ const PORT = process.env.PORT || 4000;
+ app.listen(PORT, () => {
+     console.log(`Our app is running on port ${ PORT }`);
+ });
+
+
 var server = http.createServer(app);
 
 /**
