@@ -215,7 +215,7 @@ router.get('/get', function(req, res, next) {
 
       //const resultHotel = hotel.butlerbird.content.categorys.slice(startIndex, endIndex)
 
-      console.log("result HOTEL:" + resultHotel);
+      console.log("result HOTEL:" + hotel);
 
       res.json({data: hotel});
 
