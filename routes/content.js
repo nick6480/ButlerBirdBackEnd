@@ -217,7 +217,7 @@ router.get('/get', function(req, res, next) {
 
       console.log(resultHotel);
 
-      res.json(resultHotel);
+      res.json({data: resultHotel});
 
     }
   })
