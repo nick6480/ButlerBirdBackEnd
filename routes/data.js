@@ -48,9 +48,9 @@ router.get('/settings/get', function(req, res, next) {// Get the default setting
 
 
 
-router.get('/img/:catid/:boxid/:type', function(req, res, next) {
+router.get('/img/:id/:catid/:boxid/:type', function(req, res, next) {
 
-    Hotel.findOne({'butlerbird.url' : req.hostname}, function (err, hotel) {
+    Hotel.findOne({_id : req.params.id}, function (err, hotel) {
 
     console.log("REQ");
 
