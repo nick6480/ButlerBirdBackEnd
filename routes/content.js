@@ -185,7 +185,7 @@ router.get('/get', function(req, res, next) {
 
   console.log("GET REQ");
 
-  console.log("BADA BING: " + req.hostname);
+  console.log("BADA BING: " + req.headers.host);
 
   console.log(req.query);
 
