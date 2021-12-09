@@ -46,11 +46,6 @@ router.get('/img/:id/:catid/:boxid/:type', function(req, res, next) {
 
     Company.findOne({_id : req.params.id}, function (err, company) {
 
-    console.log("REQ");
-
-
-
-
     if(err) console.log(err);
     if(company) {
 

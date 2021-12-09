@@ -215,6 +215,7 @@ router.get('/get', function(req, res, next) {
   const limit = req.query.limit;
   const id = req.query.id;
 
+  console.log("get req for stuff");
 
   Company.findOne({_id : id}, function (err, company) {
   //Company.findOne({'butlerbird.url' : req.hostname}, function (err, company) {
