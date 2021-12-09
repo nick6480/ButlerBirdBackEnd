@@ -111,15 +111,18 @@ router.post('/updatecatpos', function(req, res, next) {
 // Update Content
 
 
-router.post('/update/content', async function(req, res, next) {
-
-    let form = new formidable.IncomingForm();
-
-   form.parse(req, async function(err, fields, files) {
-      if (err) { console.error(err); }
 
 
-     Company.findOne({ _id:req.user.company}, async function(err,company) {
+
+router.post('/update', async function(req, res, next) {
+  console.log("REQUEWST");
+  let form = new formidable.IncomingForm();
+  console.log(req.user.company);
+  form.parse(req, async function(err, fields, files) {
+    if (err) {console.error(err);}
+    console.log("ASDASD");
+      Company.findOne({_id: req.user.company}, async function (err, company) {
+        console.log('found it ' + company);
 
         for (var i = 0; i < company.butlerbird.content.categorys.length; i++) {
 
@@ -145,12 +148,43 @@ router.post('/update/content', async function(req, res, next) {
                 company.butlerbird.content.categorys[i].category.content[o].page.img.contentType = files.previewimg.mimetype;
 
 
-                await company.save();
-                res.status(200)
+                company.save();
               }
             }
           }
         }
+
+
+        //res.redirect('/restaurant');
+        res.status(200)
+      })
+
+    })
+  })
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.post('/update/content', async function(req, res, next) {
+
+    let form = new formidable.IncomingForm();
+
+   form.parse(req, async function(err, fields, files) {
+      if (err) { console.error(err); }
+
+
+     Company.findOne({ _id:req.user.company}, async function(err,company) {
+
+
 
       })
     })

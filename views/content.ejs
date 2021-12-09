@@ -35,7 +35,7 @@
                 <button class="arrow" type="button" name="button"><img src="/img/arrow.svg" alt="black arrow"></button>
 
               </div>
-              <form class="saveContent" action="/content/update/content"  method="POST" enctype="multipart/form-data">
+              <form class="saveContent" action="/content/update"  method="POST" enctype="multipart/form-data">
 
                 <div class="settings">
                   <div>
@@ -48,28 +48,11 @@
                     <div class="previewImg">
                       <span>Image</span>
                       <input type="file" name="previewimg">
-                      <img src="/getimg/<%= company.butlerbird.content.categorys[i].category.catid %>/<%= company.butlerbird.content.categorys[i].category.content[o]._id%>/preview" alt="">
+                      <% if(company.butlerbird.content.categorys[i].category.content[o].preview.img) {%>
+                        <img src="/getimg/<%= company.butlerbird.content.categorys[i].category.catid %>/<%= company.butlerbird.content.categorys[i].category.content[o]._id%>/preview" alt="">
+                      <%}%>
+
                     </div>
-                    <br>
-                    <div class="previewAction">
-                      <span>Action</span>
-                      <select class="action" name="action" onchange="actionDisplay(this)">
-                          <%
-
-                            if (company.butlerbird.content.categorys[i].category.content[o].preview.action == 'link') {%>
-                              <option selected="selected" class="option" value="link">Link to page</option>
-                              <option class="option" value="copy">Copy to clipboard</option>
-                            <%} else { %>
-
-
-                              <option selected="selected" class="option" value="copy">Copy to clipboard</option>
-                              <option class="option" value="link">Link to page</option>
-
-                            <% }  %>
-
-                      </select>
-                    </div>
-
                     <br>
                     <div>
                       <h3>Page contents</h3>
