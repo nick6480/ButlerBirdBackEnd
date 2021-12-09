@@ -5,11 +5,18 @@
   </div>
   <div>
     <ul>
-      <li><a href="/">Dashboard</a></li>
-      <li><a href="/setup">Setup</a></li>
-      <li><a href="/content">Content</a></li>
-      <li><a href="/styling">Style</a></li>
-      <li><a href="/admin">Admin</a></li>
+      <% if(true) {%>
+        <li><a href="/">Dashboard</a></li>
+        <li><a href="/setup">Setup</a></li>
+        <li><a href="/content">Content</a></li>
+        <li><a href="/styling">Style</a></li>
+        <li><a href="/admin">Admin</a></li>
+
+        <li><a href="/restaurant">Restaurant</a></li>
+      <%} else {%>
+
+      <%}%>
     </ul>
+
   </div>
 </div>

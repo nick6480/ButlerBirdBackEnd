@@ -3,25 +3,25 @@ var router = express.Router();
 
 const {authUser, authRole, authUserBool, ROLE} = require("../private/auth");
 
-const {Hotel} = require("../models/hotels");
+const {Company} = require("../models/companys");
 const {User} = require("../models/users");
 
 /* GET users listing. */
 
 router.get('/', authUser, authRole(ROLE.ADMIN), function(req, res, next) {
 
-  Hotel.findOne({_id: req.user.company}, function (err, hotel) {
+  Company.findOne({_id: req.user.company}, function (err, company) {
     if(err) console.log(err);
-    if(hotel) {
+    if(company) {
 
       let data = {
-        domain: hotel.butlerbird.url,
+        domain: company.butlerbird.url,
       }
 
       console.log(data);
 
 
-      User.find({'company' :  hotel._id}, function(err, users){
+      User.find({'company' :  company._id}, function(err, users){
            console.log(users);
 
              res.locals.isAuthenticated = authUserBool(req, res);
@@ -69,13 +69,13 @@ router.post('/update/url', function(req, res, next) {
 
   if (true) {
 
-        Hotel.findOne({_id: req.user.company}, function (err, hotel) {
+        Company.findOne({_id: req.user.company}, function (err, company) {
           if(err) console.log(err);
-          if(hotel) {
+          if(company) {
 
-            hotel.butlerbird.url = req.body.data;
+            company.butlerbird.url = req.body.data;
 
-            hotel.save();
+            company.save();
 
           }
         })

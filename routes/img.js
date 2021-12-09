@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const {Hotel} = require("../models/hotels");
+const {Company} = require("../models/companys");
 
 const {authUser} = require("../private/auth");
 
@@ -9,7 +9,7 @@ const {authUser} = require("../private/auth");
 
   router.get('/:catid/:boxid/:type', function(req, res, next) { // Displays images on node app
 
-    Hotel.findOne({_id: req.user.company}, function (err, hotel) {
+    Company.findOne({_id: req.user.company}, function (err, company) {
 
       console.log("REQ");
 
@@ -17,21 +17,21 @@ const {authUser} = require("../private/auth");
 
 
       if(err) console.log(err);
-      if(hotel) {
+      if(company) {
 
-        for (var i = 0; i < hotel.butlerbird.content.categorys.length; i++) {
-          if (hotel.butlerbird.content.categorys[i].category.catid == req.params.catid) {
-            for (var o = 0; o < hotel.butlerbird.content.categorys[i].category.content.length; o++) {
-              if (hotel.butlerbird.content.categorys[i].category.content[o]._id == req.params.boxid) {
+        for (var i = 0; i < company.butlerbird.content.categorys.length; i++) {
+          if (company.butlerbird.content.categorys[i].category.catid == req.params.catid) {
+            for (var o = 0; o < company.butlerbird.content.categorys[i].category.content.length; o++) {
+              if (company.butlerbird.content.categorys[i].category.content[o]._id == req.params.boxid) {
                 if (req.params.type == 'preview') {
-                  if (hotel.butlerbird.content.categorys[i].category.content[o].preview.img) {
-                    res.contentType(hotel.butlerbird.content.categorys[i].category.content[o].preview.img.contentType);
-                    res.send(hotel.butlerbird.content.categorys[i].category.content[o].preview.img.data);
+                  if (company.butlerbird.content.categorys[i].category.content[o].preview.img) {
+                    res.contentType(company.butlerbird.content.categorys[i].category.content[o].preview.img.contentType);
+                    res.send(company.butlerbird.content.categorys[i].category.content[o].preview.img.data);
                   }
                 } else if (req.params.type == 'page') {
-                    if (hotel.butlerbird.content.categorys[i].category.content[o].page.img) {
-                      res.contentType(hotel.butlerbird.content.categorys[i].category.content[o].page.img.contentType);
-                      res.send(hotel.butlerbird.content.categorys[i].category.content[o].page.img.data);
+                    if (company.butlerbird.content.categorys[i].category.content[o].page.img) {
+                      res.contentType(company.butlerbird.content.categorys[i].category.content[o].page.img.contentType);
+                      res.send(company.butlerbird.content.categorys[i].category.content[o].page.img.data);
                     }
 
                 }

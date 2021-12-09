@@ -3,7 +3,7 @@ var router = express.Router();
 const bcrypt = require('bcrypt')
 
 
-const {Hotel} = require("../models/hotels");
+const {Company} = require("../models/companys");
 const {User} = require("../models/users");
 
 /* GET home page. */
@@ -12,22 +12,23 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', async function (req, res, next) {
-  console.log(req.body);
+    console.log("TYPE: " + req.body.businessType);
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 15)
 
-    //Register hotel
-    const hotel = new Hotel({
-      hotel: req.body.hotelname,
+    //Register company
+    const company = new Company({
+      business : req.body.businesstype,
+      name: req.body.companyname,
       address: req.body.address,
       city: req.body.city,
-      country: req.body.country,
+      country: req.body.country
     });
 
 
-
-    hotel.save(function(err, hotel) {
-
+    company.save(function(err, companyA) {
+      console.log(err);
+      console.log(companyA);
 
       // Register user
       const user = new User({
@@ -35,7 +36,7 @@ router.post('/', async function (req, res, next) {
         password: hashedPassword,
         email: req.body.email,
         tlf: req.body.tlf,
-        company: hotel._id,
+        company: companyA._id,
         role : 'admin',
       });
 
@@ -44,11 +45,6 @@ router.post('/', async function (req, res, next) {
       user.save()
 
     });
-
-
-
-
-
 
 
 

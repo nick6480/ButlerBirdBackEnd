@@ -20,6 +20,8 @@ const contentRouter = require('./routes/content');
 const stylingRouter = require('./routes/styling');
 const dataRouter = require('./routes/data');
 
+const restaurantRouter = require('./routes/restaurant');
+
 
 //const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
@@ -128,6 +130,7 @@ app.use('/', indexRouter);
 app.use('/admin', adminRouter);
 app.use('/fetchReq', fetchRouter);
 app.use('/content', contentRouter);
+app.use('/restaurant', restaurantRouter);
 app.use('/styling', stylingRouter);
 app.use('/data', dataRouter);
 

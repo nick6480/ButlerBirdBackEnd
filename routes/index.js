@@ -3,7 +3,7 @@ var router = express.Router();
 
 const mongoose = require('mongoose');
 const passport = require('passport');
-const {Hotel} = require("../models/hotels");
+const {Company} = require("../models/companys");
 const {User} = require("../models/users");
 
 const {authUser, authUserBool} = require("../private/auth");

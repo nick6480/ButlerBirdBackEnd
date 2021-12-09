@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
-const HotelSchema  = new mongoose.Schema({
-  hotel :{
+const CompanySchema  = new mongoose.Schema({
+  business : {
+    type: String,
+    required : true
+  },
+  name :{
       type  : String,
       required : true
   } ,
@@ -20,7 +24,6 @@ paymentPlan :{
     type : String,
 },
 butlerbird : {
-    url: { type : String, unique : true},
     content : {
       categorys : [{
         category: {
@@ -79,10 +82,43 @@ butlerbird : {
       }
     }
 },
-
+butlerbirdRestaurant: {
+  preview: {
+    text: String,
+    img: {
+      data: Buffer,
+      contentType: String
+    },
+    action: String,
+  },
+  page: {
+    text: String,
+    img: {
+      data: Buffer,
+      contentType: String
+    }
+  }
+},
+butlerbirdActivity : {
+  preview: {
+    text: String,
+    img: {
+      data: Buffer,
+      contentType: String
+    },
+    action: String,
+  },
+  page: {
+    text: String,
+    img: {
+      data: Buffer,
+      contentType: String
+    }
+  }
+},
 }, {timestamps: true});
-const Hotel = mongoose.model('hotel',HotelSchema);
+const Company = mongoose.model('Company',CompanySchema);
 
 module.exports = {
-  Hotel
+  Company
 }

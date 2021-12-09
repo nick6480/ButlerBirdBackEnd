@@ -694,13 +694,6 @@ function getDragAfterElement(container, y) {
 
 
 
-
-
-
-
-
-
-
  function getDragAfterElement(container, y) {
    const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
 
@@ -716,33 +709,7 @@ function getDragAfterElement(container, y) {
  }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- Hotel.findOne({ _id:req.user.company}, function(err,hotel) {
+ Company.findOne({ _id:req.user.company}, function(err,hotel) {
    //Finds the matching id and push it to an array
    for (var i = 0; i < req.body.data.length; i++) {
      for (var o = 0; o < hotel.butlerbird.content.categorys.length; o++) {
@@ -760,7 +727,7 @@ function getDragAfterElement(container, y) {
      }
    }
 
-   Hotel.findOneAndUpdate({ _id:req.user.company}, {"butlerbird.content.categorys": newArr},{new: true, upsert: true }).exec();
+   Company.findOneAndUpdate({ _id:req.user.company}, {"butlerbird.content.categorys": newArr},{new: true, upsert: true }).exec();
    console.log(newArr);
  });
 

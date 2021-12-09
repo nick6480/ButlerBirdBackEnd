@@ -2,25 +2,24 @@ var express = require('express');
 const mongoose = require('mongoose');
 var router = express.Router();
 
-const multer = require('multer');
 const path = require('path');
 
 const fs = require('fs');
 const formidable = require('formidable');
 
 
-const {Hotel} = require("../models/hotels");
+const {Company} = require("../models/companys");
 
 const {authUser, authUserBool} = require("../private/auth");
 
 router.get('/', authUser, function(req, res, next) {
 
   console.log(req.user);
-  Hotel.findOne({_id: req.user.company}, function (err, hotel) {
+  Company.findOne({_id: req.user.company}, function (err, company) {
     if(err) console.log(err);
-    if(hotel) {
+    if(company) {
       res.locals.isAuthenticated = authUserBool(req, res);
-      res.render('content', { title: 'Content',  company : hotel});
+      res.render('content', { title: 'Content',  company : company});
     }
   })
 });
@@ -29,10 +28,10 @@ router.get('/', authUser, function(req, res, next) {
 
 router.get('/company', function(req, res, next) {
 
-    Hotel.findOne({_id: req.user.company}, function (err, hotel) {
+    Company.findOne({_id: req.user.company}, function (err, company) {
       if(err) console.log(err);
-      if(hotel) {
-        res.json({ company: hotel })
+      if(company) {
+        res.json({ company: company })
       }
     })
 });
@@ -42,28 +41,25 @@ router.get('/company', function(req, res, next) {
 // Create new category
 router.post('/createcat', function(req, res, next) {
   let id = new mongoose.Types.ObjectId()
-  Hotel.findOneAndUpdate({ _id:req.user.company}, {$push: {"butlerbird.content.categorys": {"category": {catid: id, name: req.body.data}}}},{new: true, upsert: true }).exec();
+  Company.findOneAndUpdate({ _id:req.user.company}, {$push: {"butlerbird.content.categorys": {"category": {catid: id, name: req.body.data}}}},{new: true, upsert: true }).exec();
 })
 
 
 // Create new box
 router.post('/createbox', function(req, res, next) {
 
-  console.log(req.body.data.value);
-
   let content = {
     name : req.body.data.value
   }
 
-
-  Hotel.findOne({_id: req.user.company}, function (err, hotel) {
+  Company.findOne({_id: req.user.company}, function (err, company) {
     if(err) console.log(err);
-    if(hotel) {
+    if(company) {
 
-      for (var i = 0; i < hotel.butlerbird.content.categorys.length; i++) {
-        if (hotel.butlerbird.content.categorys[i].category.catid === req.body.data.id) {
-          hotel.butlerbird.content.categorys[i].category.content.push(content)
-          hotel.save()
+      for (var i = 0; i < company.butlerbird.content.categorys.length; i++) {
+        if (company.butlerbird.content.categorys[i].category.catid === req.body.data.id) {
+          company.butlerbird.content.categorys[i].category.content.push(content)
+          company.save()
         }
       }
 
@@ -82,30 +78,30 @@ router.post('/updatecatpos', function(req, res, next) {
   console.log(req.body.data);
 
 
-  Hotel.findOne({ _id:req.user.company}, function(err,hotel) {
+  Company.findOne({ _id:req.user.company}, function(err,company) {
     //Finds the matching id and push it to an array
     for (var i = 0; i < req.body.data.length; i++) {
-      for (var o = 0; o < hotel.butlerbird.content.categorys.length; o++) {
-        if (req.body.data[i].id === hotel.butlerbird.content.categorys[o].category.catid) {
-          console.log('match: ' + req.body.data[i].id + " : " + hotel.butlerbird.content.categorys[o].category.catid);
-          catArr.push(hotel.butlerbird.content.categorys[o])
+      for (var o = 0; o < company.butlerbird.content.categorys.length; o++) {
+        if (req.body.data[i].id === company.butlerbird.content.categorys[o].category.catid) {
+          console.log('match: ' + req.body.data[i].id + " : " + company.butlerbird.content.categorys[o].category.catid);
+          catArr.push(company.butlerbird.content.categorys[o])
         }
 
         for (var a = 0; a < req.body.data[i].boxes.length; a++) {
-          for (var u = 0; u < hotel.butlerbird.content.categorys[o].category.content.length; u++) {
-            if (req.body.data[i].data[a] === hotel.butlerbird.content.categorys[o].category.content[u]) {
-              //boxArr.push(hotel.butlerbird.content.categorys[o].content[u])
-              catArr[o].category.content.push(hotel.butlerbird.content.categorys[o].content[u])
+          for (var u = 0; u < company.butlerbird.content.categorys[o].category.content.length; u++) {
+            if (req.body.data[i].data[a] === company.butlerbird.content.categorys[o].category.content[u]) {
+              //boxArr.push(company.butlerbird.content.categorys[o].content[u])
+              catArr[o].category.content.push(company.butlerbird.content.categorys[o].content[u])
 
             }
           //let q = `butlerbird.content.categorys${[o]}.category.content`
-          //Hotel.findOneAndUpdate({ _id:req.user.company}, {`butlerbird.content.categorys${[o]}.category.content`: boxArr},{new: true, upsert: true }).exec();
+          //Company.findOneAndUpdate({ _id:req.user.company}, {`butlerbird.content.categorys${[o]}.category.content`: boxArr},{new: true, upsert: true }).exec();
           }
         }
       }
     }
 
-    Hotel.findOneAndUpdate({ _id:req.user.company}, {"butlerbird.content.categorys": catArr},{new: true, upsert: true }).exec();
+    Company.findOneAndUpdate({ _id:req.user.company}, {"butlerbird.content.categorys": catArr},{new: true, upsert: true }).exec();
     console.log(catArr);
   });
 
@@ -117,41 +113,39 @@ router.post('/updatecatpos', function(req, res, next) {
 
 router.post('/update/content', async function(req, res, next) {
 
-
-
     let form = new formidable.IncomingForm();
 
    form.parse(req, async function(err, fields, files) {
       if (err) { console.error(err); }
 
 
-     Hotel.findOne({ _id:req.user.company}, async function(err,hotel) {
+     Company.findOne({ _id:req.user.company}, async function(err,company) {
 
-        for (var i = 0; i < hotel.butlerbird.content.categorys.length; i++) {
+        for (var i = 0; i < company.butlerbird.content.categorys.length; i++) {
 
 
-          if (hotel.butlerbird.content.categorys[i].category.catid == fields.catId) {
-            console.log(hotel.butlerbird.content.categorys[i]);
-            for (var o = 0; o < hotel.butlerbird.content.categorys[i].category.content.length; o++) {
-              console.log(hotel.butlerbird.content.categorys[i].category.catid == fields.catId);
-              if (hotel.butlerbird.content.categorys[i].category.content[o]._id == fields.boxId) {
+          if (company.butlerbird.content.categorys[i].category.catid == fields.catId) {
+            console.log(company.butlerbird.content.categorys[i]);
+            for (var o = 0; o < company.butlerbird.content.categorys[i].category.content.length; o++) {
+              console.log(company.butlerbird.content.categorys[i].category.catid == fields.catId);
+              if (company.butlerbird.content.categorys[i].category.content[o]._id == fields.boxId) {
 
 
                 // Preview
-                hotel.butlerbird.content.categorys[i].category.content[o].preview.text = fields.previewtext
-                hotel.butlerbird.content.categorys[i].category.content[o].preview.action = fields.action
+                company.butlerbird.content.categorys[i].category.content[o].preview.text = fields.previewtext
+                company.butlerbird.content.categorys[i].category.content[o].preview.action = fields.action
 
-                hotel.butlerbird.content.categorys[i].category.content[o].preview.img.data = await fs.readFileSync(files.previewimg.filepath);
-                hotel.butlerbird.content.categorys[i].category.content[o].preview.img.contentType = files.previewimg.mimetype;
+                company.butlerbird.content.categorys[i].category.content[o].preview.img.data = await fs.readFileSync(files.previewimg.filepath);
+                company.butlerbird.content.categorys[i].category.content[o].preview.img.contentType = files.previewimg.mimetype;
 
                 // Page
-                hotel.butlerbird.content.categorys[i].category.content[o].page.text = fields.pagetext
+                company.butlerbird.content.categorys[i].category.content[o].page.text = fields.pagetext
 
-                hotel.butlerbird.content.categorys[i].category.content[o].page.img.data = await fs.readFileSync(files.previewimg.filepath);
-                hotel.butlerbird.content.categorys[i].category.content[o].page.img.contentType = files.previewimg.mimetype;
+                company.butlerbird.content.categorys[i].category.content[o].page.img.data = await fs.readFileSync(files.previewimg.filepath);
+                company.butlerbird.content.categorys[i].category.content[o].page.img.contentType = files.previewimg.mimetype;
 
 
-                await hotel.save();
+                await company.save();
                 res.status(200)
               }
             }
@@ -183,43 +177,30 @@ router.post('/', function(req, res, next) {
 
 router.get('/get', function(req, res, next) {
 
-  console.log("GET REQ");
-
-  console.log("BADA BING: " + req.headers.host);
-
-  console.log(req.query);
-
   const page = req.query.page;
   const limit = req.query.limit;
   const id = req.query.id;
 
-  console.log(id);
 
-  Hotel.findOne({_id : id}, function (err, hotel) {
-  //Hotel.findOne({'butlerbird.url' : req.hostname}, function (err, hotel) {
+  Company.findOne({_id : id}, function (err, company) {
+  //Company.findOne({'butlerbird.url' : req.hostname}, function (err, company) {
     if(err) console.log(err);
-    if(hotel) {
-      console.log(hotel);
+    if(company) {
+      console.log(company);
 
 
 
-      for (var i = 0; i < hotel.butlerbird.content.categorys.length; i++) {
-        for (var o = 0; o < hotel.butlerbird.content.categorys[i].category.content.length; o++) {
-          delete hotel.butlerbird.content.categorys[i].category.content[o].preview.img
-          delete hotel.butlerbird.content.categorys[i].category.content[o].page.img
+      for (var i = 0; i < company.butlerbird.content.categorys.length; i++) {
+        for (var o = 0; o < company.butlerbird.content.categorys[i].category.content.length; o++) {
+          delete company.butlerbird.content.categorys[i].category.content[o].preview.img
+          delete company.butlerbird.content.categorys[i].category.content[o].page.img
         }
       }
-
       const startIndex = (page - 1) * limit;
       const endIndex = page * limit;
-
-      hotel.butlerbird.content.categorys.slice(startIndex, endIndex)
-
-      const resultHotel = hotel.butlerbird.content.categorys;
-
-      console.log("result HOTEL:" + resultHotel);
-
-      res.json(resultHotel);
+      company.butlerbird.content.categorys.slice(startIndex, endIndex)
+      const resultCompany = company.butlerbird.content.categorys;
+      res.json(resultCompany);
 
     }
   })
@@ -227,45 +208,6 @@ router.get('/get', function(req, res, next) {
 
   res.status(200)
 });
-
-
-
-
-
-
-
-
-
-/*
-
-router.get('/find/:hotelId', function(req, res, next) {
-
-  console.log(req.hostname );
-  console.log(req.params.hotelId);
-
-  Hotel.findOne({_id: req.params.hotelId}, function (err, hotel) {
-    if(err) console.log(err);
-    if(hotel) {
-
-      res.json(hotel);
-    }
-  })
-
-
-  res.status(200)
-});
-
-
-
-
-*/
-
-
-
-
-
-
-
 
 
 
