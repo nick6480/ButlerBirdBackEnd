@@ -7,16 +7,19 @@ const {Company} = require("../models/companys");
 
 // Display data on Butlerbird
 router.get('/company/get', function(req, res, next) { // GET Company data
-  Company.findOne({'butlerbird.url' : req.hostname}, function (err, company) {
+
+  const id = req.query.id;
+
+  Company.findOne({'_id' : id}, function (err, company) {
     if(err) console.log(err);
     if(company) {
         let obj = {
-          name: company.company,
+          business: company.business,
+          name: company.name,
           address: company.address,
           city: company.city,
           country: company.country
         }
-
       res.json(obj);
     }
   })

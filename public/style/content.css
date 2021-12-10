@@ -1,6 +1,20 @@
+
+.contentWrap {
+  display: flex;
+  justify-content: row;
+}
+
+
+.contentWrap > div{
+  width: 50%;
+}
+
+
+
 .createNewCatWrap {
   width: 100% - 20px;
-
+  display: flex;
+  flex-direction: column;
 }
 
 

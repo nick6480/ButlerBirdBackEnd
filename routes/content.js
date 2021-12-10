@@ -41,7 +41,9 @@ router.get('/company', function(req, res, next) {
 // Create new category
 router.post('/createcat', function(req, res, next) {
   let id = new mongoose.Types.ObjectId()
-  Company.findOneAndUpdate({ _id:req.user.company}, {$push: {"butlerbird.content.categorys": {"category": {catid: id, name: req.body.data}}}},{new: true, upsert: true }).exec();
+  Company.findOneAndUpdate({ _id:req.user.company}, {
+    $push: {"butlerbird.content.categorys": {"category": {catid: id, name: req.body.data}}}
+  },{new: true, upsert: true }).exec();
 })
 
 
@@ -62,10 +64,8 @@ router.post('/createbox', function(req, res, next) {
           company.save()
         }
       }
-
     }
   })
-
 })
 
 
@@ -83,7 +83,6 @@ router.post('/updatecatpos', function(req, res, next) {
     for (var i = 0; i < req.body.data.length; i++) {
       for (var o = 0; o < company.butlerbird.content.categorys.length; o++) {
         if (req.body.data[i].id === company.butlerbird.content.categorys[o].category.catid) {
-          console.log('match: ' + req.body.data[i].id + " : " + company.butlerbird.content.categorys[o].category.catid);
           catArr.push(company.butlerbird.content.categorys[o])
         }
 
@@ -115,24 +114,18 @@ router.post('/updatecatpos', function(req, res, next) {
 
 
 router.post('/update', async function(req, res, next) {
-  console.log("REQUEWST");
+
   let form = new formidable.IncomingForm();
   console.log(req.user.company);
   form.parse(req, async function(err, fields, files) {
     if (err) {console.error(err);}
-    console.log("ASDASD");
+
       Company.findOne({_id: req.user.company}, async function (err, company) {
-        console.log('found it ' + company);
 
         for (var i = 0; i < company.butlerbird.content.categorys.length; i++) {
-
-
           if (company.butlerbird.content.categorys[i].category.catid == fields.catId) {
-            console.log(company.butlerbird.content.categorys[i]);
             for (var o = 0; o < company.butlerbird.content.categorys[i].category.content.length; o++) {
-              console.log(company.butlerbird.content.categorys[i].category.catid == fields.catId);
               if (company.butlerbird.content.categorys[i].category.content[o]._id == fields.boxId) {
-
 
                 // Preview
                 company.butlerbird.content.categorys[i].category.content[o].preview.text = fields.previewtext
