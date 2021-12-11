@@ -126,6 +126,8 @@ app.use(function(req, res, next) {
 */
 
 
+var cors = require('cors')
+
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);
 app.use('/fetchReq', fetchRouter);
@@ -140,7 +142,7 @@ app.use('/register', registerRouter);
 
 app.use('/getimg', imgRouter);
 
-
+app.use(cors())
 
 app.use(function (req, res, next) {
 res.setHeader('Access-Control-Allow-Origin', '*');
