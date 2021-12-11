@@ -208,13 +208,11 @@ router.get('/get', function(req, res, next) {
   const limit = req.query.limit;
   const id = req.query.id;
 
-  console.log("get req for stuff");
 
   Company.findOne({_id: id}, function (err, company) {
     if(err) console.log(err);
     if(company) {
       console.log(company);
-
 
 
       for (var i = 0; i < company.butlerbird.content.categorys.length; i++) {
@@ -228,7 +226,6 @@ router.get('/get', function(req, res, next) {
       company.butlerbird.content.categorys.slice(startIndex, endIndex)
       const resultCompany = company.butlerbird.content.categorys;
 
-      console.log(resultCompany);
 
       res.json(resultCompany);
 
