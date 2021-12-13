@@ -21,7 +21,7 @@ const stylingRouter = require('./routes/styling');
 const dataRouter = require('./routes/data');
 
 const restaurantRouter = require('./routes/restaurant');
-
+const activityRouter = require('./routes/activity');
 
 //const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
@@ -133,6 +133,7 @@ app.use('/admin', adminRouter);
 app.use('/fetchReq', fetchRouter);
 app.use('/content', contentRouter);
 app.use('/restaurant', restaurantRouter);
+app.use('/activity', activityRouter);
 app.use('/styling', stylingRouter);
 app.use('/data', dataRouter);
 

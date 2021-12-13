@@ -18,13 +18,13 @@ router.get('/', authUser, function(req, res, next) {
     if(company) {
       res.locals.isAuthenticated = authUserBool(req, res);
 
-      if (company.butlerbirdRestaurant.preview.img) {
-        delete company.butlerbirdRestaurant.preview.img.data
+      if (company.butlerbirdActivity.preview.img) {
+        delete company.butlerbirdActivity.preview.img.data
       }
-      if (company.butlerbirdRestaurant.preview.img) {
-        delete company.butlerbirdRestaurant.preview.img.data
+      if (company.butlerbirdActivity.preview.img) {
+        delete company.butlerbirdActivity.preview.img.data
       }
-      res.render('restaurant', { title: 'Restaurant',  company : company});
+      res.render('activity', { title: 'Activities',  company : company});
     }
   })
 });
@@ -41,15 +41,15 @@ router.post('/update', async function(req, res, next) {
         console.log('found it ' + company);
 
         // Preview
-        company.butlerbirdRestaurant.preview.text = fields.previewtext
-        company.butlerbirdRestaurant.preview.img.data = await fs.readFileSync(files.previewimg.filepath);
-        company.butlerbirdRestaurant.preview.img.contentType = files.previewimg.mimetype;
+        company.butlerbirdActivity.preview.text = fields.previewtext
+        company.butlerbirdActivity.preview.img.data = await fs.readFileSync(files.previewimg.filepath);
+        company.butlerbirdActivity.preview.img.contentType = files.previewimg.mimetype;
 
         // Page
-        company.butlerbirdRestaurant.page.text = fields.pagetext
+        company.butlerbirdActivity.page.text = fields.pagetext
 
-        company.butlerbirdRestaurant.page.img.data = await fs.readFileSync(files.previewimg.filepath);
-        company.butlerbirdRestaurant.page.img.contentType = files.previewimg.mimetype;
+        company.butlerbirdActivity.page.img.data = await fs.readFileSync(files.previewimg.filepath);
+        company.butlerbirdActivity.page.img.contentType = files.previewimg.mimetype;
 
 
         company.save()
@@ -69,16 +69,15 @@ router.get('/img/:type/:id', function(req, res, next) { // Displays images on no
 
   Company.findOne({_id: req.params.id}, function (err, company) {
     if (req.params.type == 'preview') {
-      res.contentType(company.butlerbirdRestaurant.preview.img.contentType);
-      res.send(company.butlerbirdRestaurant.preview.img.data);
+      res.contentType(company.butlerbirdActivity.preview.img.contentType);
+      res.send(company.butlerbirdActivity.preview.img.data);
     } else if (req.params.type == 'page') {
-      res.contentType(company.butlerbirdRestaurant.page.img.contentType);
+      res.contentType(company.butlerbirdActivity.page.img.contentType);
       res.send(company.butlerbird.page.img.data);
     }
   })
 
 })
-
 
 
 

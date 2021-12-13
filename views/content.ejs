@@ -21,8 +21,8 @@
             <div class="createbox">
               <h2><%= company.butlerbird.content.categorys[i].category.name %> </h2>
               <div>
-                <input id="boxname" type="text" name="" value="">
-                <button id="boxnamebtn" type="button" name="button">+</button>
+                <input class="boxname" type="text" name="" value="">
+                <button class="boxnamebtn" type="button" name="button">+</button>
               </div>
 
             </div>
@@ -50,11 +50,22 @@
                           <span>Image</span>
                           <input type="file" name="previewimg">
                           <% if(company.butlerbird.content.categorys[i].category.content[o].preview.img) {%>
-                            <img src="/getimg/<%= company.butlerbird.content.categorys[i].category.catid %>/<%= company.butlerbird.content.categorys[i].category.content[o]._id%>/preview" alt="">
+
                           <%}%>
 
                         </div>
                         <br>
+                        <div class="previewStyle">
+                          <h3>Preview Style</h3>
+                          <div class="previewText">
+                            <span>Text alignment</span>
+                            <select name="alignment">
+                              <option value="left">Left</option>
+                              <option value="center">Center</option>
+                              <option value="right">Right</option>
+                            </select>
+                          </div>
+                        </div>
                         <div>
                           <h3>Page contents</h3>
                             <div class="pageImg">
@@ -97,12 +108,12 @@
       </div>
     </div>
 
-    <iframe id="inlineFrameExample"
+  <!--  <iframe id="inlineFrameExample"
     title="Inline Frame Example"
     width="300"
     height="500"
     src="https://jovial-clarke-a9896e.netlify.app/">
-</iframe>
+</iframe>-->
 
   </div>
 

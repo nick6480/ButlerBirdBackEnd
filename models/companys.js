@@ -4,6 +4,9 @@ const CompanySchema  = new mongoose.Schema({
     type: String,
     required : true
   },
+  businessType : {
+    type: String,
+  },
   name :{
       type  : String,
       required : true
@@ -37,7 +40,9 @@ butlerbird : {
                 data : Buffer,
                 contentType : String
               },
-              action : String,
+              style : {
+                alignment: String,
+              },
             },
             page: {
               text : String,

@@ -89,7 +89,7 @@ router.post('/updatecatpos', function(req, res, next) {
         for (var a = 0; a < req.body.data[i].boxes.length; a++) {
           for (var u = 0; u < company.butlerbird.content.categorys[o].category.content.length; u++) {
             if (req.body.data[i].data[a] === company.butlerbird.content.categorys[o].category.content[u]) {
-              //boxArr.push(company.butlerbird.content.categorys[o].content[u])
+              boxArr.push(company.butlerbird.content.categorys[o].content[u])
               catArr[o].category.content.push(company.butlerbird.content.categorys[o].content[u])
 
             }
@@ -130,6 +130,9 @@ router.post('/update', async function(req, res, next) {
                 // Preview
                 company.butlerbird.content.categorys[i].category.content[o].preview.text = fields.previewtext
                 company.butlerbird.content.categorys[i].category.content[o].preview.action = fields.action
+
+                company.butlerbird.content.categorys[i].category.content[o].preview.action = fields.action
+
 
                 company.butlerbird.content.categorys[i].category.content[o].preview.img.data = await fs.readFileSync(files.previewimg.filepath);
                 company.butlerbird.content.categorys[i].category.content[o].preview.img.contentType = files.previewimg.mimetype;

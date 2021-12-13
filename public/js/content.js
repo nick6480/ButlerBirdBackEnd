@@ -51,25 +51,23 @@ function spanReset(e) {
 // Create box -----------------------------------------------------------
 
 
-let boxname = document.getElementById('boxname')
-let boxnamebtn = document.getElementById('boxnamebtn')
-
-if (boxnamebtn) {
-  boxnamebtn.addEventListener('click', createNewBox)
-}
+let boxname = document.querySelectorAll('.boxname')
+let boxnamebtn = document.querySelectorAll('.boxnamebtn')
 
 
+boxnamebtn.forEach(btn => {
+  btn.addEventListener('click', createNewBox)
+})
 
 
-function createNewBox() {
-  console.log(boxname.parentElement.parentElement);
+function createNewBox(e) {
+
 
   let data = {
-    id: boxname.parentElement.parentElement.parentElement.id,
-    value: boxname.value
+    id: this.parentElement.parentElement.parentElement.id,
+    value: this.parentElement.getElementsByTagName('input')[0].value
   }
 
-  console.log(data);
   post(data, '/content/createbox')
 }
 
