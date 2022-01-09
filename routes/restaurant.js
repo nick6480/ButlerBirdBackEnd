@@ -76,7 +76,6 @@ router.post('/update', async function(req, res, next) {
 
 router.get('/img/:type/:id', function(req, res, next) { // Displays images on node app
 
-  console.log(req.params.type);
 
   Company.findOne({_id: req.params.id}, function (err, company) {
     if (req.params.type == 'preview') {
