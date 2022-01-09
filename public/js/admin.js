@@ -17,14 +17,8 @@ function updateUrl() {
   //REGEX DISABLED FOR TESTING PURPOSE
 
   if (true) {
-        post(url.value, '/admin/update/url')
-    } else {
-        console.log("Invalid");
-  }
-
-
-
-
+      post(url.value, '/admin/update/url')
+    }
 }
 
 

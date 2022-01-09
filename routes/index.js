@@ -15,6 +15,8 @@ router.get('/', function(req, res, next) {
   if (authUserBool(req, res) == true) {
     res.redirect('/dashboard')
   } else {
+
+
       res.locals.isAuthenticated = authUserBool(req, res);
       res.render('index', {user: req.user, title: 'Index'});
   }
@@ -24,9 +26,16 @@ router.get('/', function(req, res, next) {
 
 
 
+
 router.get('/dashboard', authUser, function(req, res, next) {
   res.locals.isAuthenticated = authUserBool(req, res);
-  res.render('dashboard', { name: req.user.name, title: 'Dashboard' });
+
+
+  Company.findOne({_id: req.user.company}, function (err, company) {
+    res.locals.buisness = company.business;
+
+    res.render('dashboard', { name: req.user.name, company: company.name, title: 'Dashboard' });
+  })
 });
 
 

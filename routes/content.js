@@ -19,6 +19,8 @@ router.get('/', authUser, function(req, res, next) {
     if(err) console.log(err);
     if(company) {
       res.locals.isAuthenticated = authUserBool(req, res);
+      res.locals.buisness = company.business;
+      
       res.render('content', { title: 'Content',  company : company});
     }
   })

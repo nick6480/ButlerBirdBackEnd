@@ -18,13 +18,14 @@ router.get('/', authUser, authRole(ROLE.ADMIN), function(req, res, next) {
         domain: company.butlerbird.url,
       }
 
-      console.log(data);
+      res.locals.buisness = company.business;
 
 
       User.find({'company' :  company._id}, function(err, users){
            console.log(users);
 
              res.locals.isAuthenticated = authUserBool(req, res);
+
 
              let userArr = []
 

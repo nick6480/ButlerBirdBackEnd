@@ -85,16 +85,15 @@ router.get('/img/restaurant/:id/:type', function(req, res, next) {
     if(company) {
 
 
-
-
-
-
       switch (req.params.type) {
       case 'preview':
         res.contentType(company.butlerbirdRestaurant.preview.img.contentType);
         res.send(company.butlerbirdRestaurant.preview.img.data);
       break;
-
+      case 'page':
+        res.contentType(company.butlerbirdRestaurant.page.img.contentType);
+        res.send(company.butlerbirdRestaurant.page.img.data);
+      break;
       }
     }
   })
@@ -129,10 +128,12 @@ router.get('/get', function(req, res, next) {
   const id = req.query.id;
   const business = req.query.q
 
-  console.log('get');
+
+
 
   switch (business) {
     case 'restaurant':
+      console.log('NEW RESTAURANT REQ');
       Company.findOne({_id: id}, function (err, hotel) {
 
         if (hotel) {

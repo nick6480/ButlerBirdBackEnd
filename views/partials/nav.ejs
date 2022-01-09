@@ -5,18 +5,25 @@
   </div>
   <div>
     <ul>
-      <% if(true) {%>
         <li><a href="/">Dashboard</a></li>
-        <li><a href="/setup">Setup</a></li>
-        <li><a href="/content">Content</a></li>
-        <li><a href="/styling">Style</a></li>
-        <li><a href="/admin">Admin</a></li>
 
-        <li><a href="/restaurant">Restaurant</a></li>
+
+      <% switch (locals.buisness) {
+        case 'hotel' : %>
+          <li><a href="/setup">Setup</a></li>
+          <li><a href="/content">Content</a></li>
+          <li><a href="/styling">Style</a></li>
+          <li><a href="/admin">Admin</a></li>
+        <% break;
+
+        case 'restaurant' : %>
+          <li><a href="/restaurant">Restaurant</a></li>
+        <% break;
+
+        case 'activity' : %>
           <li><a href="/activity">Activity</a></li>
-      <%} else {%>
-
-      <%}%>
+        <% break;
+        } %>
     </ul>
 
   </div>
